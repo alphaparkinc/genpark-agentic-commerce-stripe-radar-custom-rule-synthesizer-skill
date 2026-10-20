@@ -1,0 +1,77 @@
+{
+  "name": "genpark-agentic-commerce-stripe-radar-custom-rule-synthesizer-skill",
+  "version": "1.0.0",
+  "title": "Stripe Radar Custom Fraud Rules & Velocity Synthesizer Skill",
+  "description": "Automated merchant chargeback root-cause analysis, dynamic Stripe Radar / Adyen RevenueProtect risk rules synthesis, and false positive reducer. Built for GenPark (https://www.genpark.ai).",
+  "homepage": "https://www.genpark.ai",
+  "linkedin": "https://www.linkedin.com/company/92955550",
+  "category": "agentic-commerce",
+  "topics": [
+    "stripe-radar",
+    "fraud-rules",
+    "velocity-limits",
+    "payment-risk",
+    "agentic-commerce",
+    "model-context-protocol",
+    "genpark"
+  ],
+  "tools": [
+    {
+      "name": "synthesize_stripe_radar_rules",
+      "description": "Generate concrete Stripe Radar rule syntax strings targeting identified fraud attack vectors (e.g. BIN velocity, country mismatch, high-risk email domains).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "attack_pattern": {
+            "type": "string",
+            "enum": [
+              "CARD_TESTING_VELOCITY",
+              "PROXY_TOR_IP",
+              "COUNTRY_MISMATCH_HIGH_TICKET",
+              "DISPOSABLE_EMAIL_RUSH"
+            ]
+          },
+          "velocity_window_hours": {
+            "type": "integer"
+          },
+          "max_allowed_attempts": {
+            "type": "integer"
+          },
+          "risk_score_threshold": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "attack_pattern"
+        ]
+      }
+    },
+    {
+      "name": "audit_rule_false_positive_impact",
+      "description": "Simulate transaction block rate and estimated gross merchant revenue loss caused by overly aggressive fraud rules.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "monthly_gmv_usd": {
+            "type": "number"
+          },
+          "monthly_order_count": {
+            "type": "integer"
+          },
+          "estimated_blocked_tx_rate_pct": {
+            "type": "number"
+          },
+          "chargeback_rate_reduction_bps": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "monthly_gmv_usd",
+          "monthly_order_count",
+          "estimated_blocked_tx_rate_pct",
+          "chargeback_rate_reduction_bps"
+        ]
+      }
+    }
+  ]
+}
